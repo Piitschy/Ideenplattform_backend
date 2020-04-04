@@ -7,10 +7,12 @@ for x in myresult:
   print(x)
 
 class User:
-    def __init__(self, firstname, lastname, username):
+    def __init__(self, firstname, lastname, username, email, advanced = False):
         self.firstname = firstname
         self.lastname = lastname
         self.username = username
-        
+        self.email = email
+        self.advanced = advanced
+
 
 
