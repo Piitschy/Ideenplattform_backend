@@ -2,7 +2,7 @@ from flask import Flask
 import requests, json
 app = Flask(__name__)
 
-@app.route("/user/", methods=["GET","POST"])
+@app.route("/user", methods=["GET","POST"])
 def get_userlist():
     ret=""
     try:
