@@ -5,3 +5,12 @@ mycursor.execute("SELECT text FROM test")
 myresult = mycursor.fetchall()
 for x in myresult:
   print(x)
+
+class User:
+    def __init__(self, firstname, lastname, username):
+        self.firstname = firstname
+        self.lastname = lastname
+        self.username = username
+        
+
+
