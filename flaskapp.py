@@ -1,5 +1,5 @@
 from flask import Flask, request
-import json
+import json, sq
 app = Flask(__name__)
 
 def null(x):
@@ -8,6 +8,8 @@ def null(x):
     else:
         return x
 
+
+#USER
 @app.route("/user", methods=["GET","POST"])
 def get_userlist():
     ret=""
@@ -36,11 +38,12 @@ def parse_request(userId):
         if request.method == "GET":
             #SQL get user by "userId"
             """
-            username
-            email
-            id
+            username=""
+            email=""
+            firstname=""
+            lastname=""
             """
-            ret =""+userId
+            ret =json.dumps()
         if request.method == "DELETE":
             #Nachfrage?
             #SQL delete user by "userId"
@@ -48,6 +51,22 @@ def parse_request(userId):
     except:
         ret="202"
     return ret
+
+#CONTENT
+@app.route("/content/<string:contentId>", methods=["GET","DELETE"])
+def parse_request(contentId):
+    ret=""
+    try:
+        if request.method == "GET":
+            """
+            title=""
+            tags=[(,),(,)]
+            author=""
+            comments=(,)
+            sections = [Section]
+            """
+            
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0')
