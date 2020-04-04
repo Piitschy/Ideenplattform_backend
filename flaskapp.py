@@ -31,6 +31,8 @@ def parse_request(userId):
             #Nachfrage?
             #SQL delete user by "userId"
             ret = "200"
+    except:
+        ret="202"
     return ret
 
 if __name__ == "__main__":
