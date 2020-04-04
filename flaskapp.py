@@ -1,15 +1,22 @@
-from flask import Flask
-import requests, json
+from flask import Flask, request
+import json
 app = Flask(__name__)
+
+def null(x):
+    if x == None:
+        return ""
+    else:
+        return x
 
 @app.route("/user", methods=["GET","POST"])
 def get_userlist():
     ret=""
     try:
         if request.method == "GET":
-            username = request.args.get('username')
-            email = request.args.get('email')
+            username = null(request.args.get('username'))
+            email = null(request.args.get('email'))
             #SQL get all users
+            print(username)
             ret="200"
     except:
         ret="202"
