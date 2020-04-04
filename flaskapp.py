@@ -1,19 +1,24 @@
 from flask import Flask, request
 from dataHandler import *
-import json
+import json, re
 app = Flask(__name__)
-
-def null(x):
-    if x == None:
-        return ""
-    else:
-        return x
 
 def object2json(object):
     ret={}
     for attr, value in object.__dict__.items():
         ret.update({attr:value})
     return json.dumps(ret)
+
+def validierung(eingabe,typ=None,regex=None):
+    return eingabe
+    """
+    if isinstance(eingabe, str) or typ==None:
+        return False
+    for reg in regex:
+        if re.search(regex[reg],eingabe):
+            return eingabe
+    return False
+    """
 
 #USER
 @app.route("/user", methods=["GET","POST"])
@@ -27,10 +32,15 @@ def get_userlist():
             ret="200"
 
         if request.method == "POST":
-            username = null(request.form('username'))
-            email = null(request.form('email'))
-            firstname = null(request.form('firstname'))
-            lastname = null(request.form('lastname'))
+            email = validierung(request.form('email'),"email",regex)
+            firstname = validierung(request.form('firstname'),"name",regex)
+            lastname = validierung(request.form('lastname'),"name",regex)
+            username = validierung(request.form('username'),"uname",regex)
+            paras = (email,firstname,lastname,username)
+            if None in paras:
+                ret="202 Bad Data"
+            u=User(-1,email,firstname,lastname,username)
+            u.store(None)
             #SQL write dates
             ret="200"
     except:
@@ -68,4 +78,5 @@ def parse_request(contentId):
 
 
 if __name__ == "__main__":
+    regex={}#json.loads("conf/regex.json")
     app.run(host='0.0.0.0')
