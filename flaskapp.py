@@ -16,7 +16,14 @@ def get_userlist():
             username = null(request.args.get('username'))
             email = null(request.args.get('email'))
             #SQL get all users
-            print(username)
+            ret="200"
+
+        if request.method == "POST":
+            username = null(request.form('username'))
+            email = null(request.form('email'))
+            firstname = null(request.form('firstname'))
+            lastname = null(request.form('lastname'))
+            #SQL write dates
             ret="200"
     except:
         ret="202"
