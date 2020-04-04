@@ -9,6 +9,11 @@ def null(x):
     else:
         return x
 
+def object2json(object):
+    ret={}
+    for attr, value in object.__dict__.items():
+        ret.update({attr:value})
+    return json.dumps(ret)
 
 #USER
 @app.route("/user", methods=["GET","POST"])
@@ -37,14 +42,7 @@ def parse_request(userId):
     ret=""
     try:
         if request.method == "GET":
-            #SQL get user by "userId"
-            """
-            username=""
-            email=""
-            firstname=""
-            lastname=""
-            """
-            ret =json.dumps()
+            return object2json(loadUser(userId))
         if request.method == "DELETE":
             #Nachfrage?
             #SQL delete user by "userId"
