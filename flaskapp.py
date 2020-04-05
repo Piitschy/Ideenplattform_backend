@@ -67,18 +67,18 @@ def get_userlist():
         :param username: users username
         :param advanced: True if advanced permission active
         """
-        userId = validierung(request.form('id'),"id",regex)
-        email = validierung(request.form('email'),"email",regex)
-        firstname = validierung(request.form('firstname'),"name",regex)
-        lastname = validierung(request.form('lastname'),"name",regex)
-        username = validierung(request.form('username'),"uname",regex)
-        password = validierung(request.form('password'),"password",regex)
+        userId = validierung(request.form.get('id'),"id",regex)
+        email = validierung(request.form.get('email'),"email",regex)
+        firstname = validierung(request.form.get('firstname'),"name",regex)
+        lastname = validierung(request.form.get('lastname'),"name",regex)
+        username = validierung(request.form.get('username'),"uname",regex)
+        password = validierung(request.form.get('password'),"password",regex)
         """
         paras = (email,firstname,lastname,username)
         if None in paras:
             return "Nicht alle Parameter befuellt"
         """
-        u=User(-1,email,firstname,lastname,username)
+        u=User(userId,email,firstname,lastname,username)
         u.store(password)
         return "200"
 
