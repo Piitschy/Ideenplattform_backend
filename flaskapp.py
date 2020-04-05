@@ -83,7 +83,8 @@ def get_userlist():
 def parse_request(userId):
     ret=""
     if request.method == "GET":
-        return object2json(loadUser(userId))
+        print(userId)
+        return object2json(loadUser(int(userId)))
     if request.method == "DELETE":
         u=loadUser(userId)
         u.delete()
