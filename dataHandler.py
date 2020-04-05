@@ -49,7 +49,7 @@ class User:
     """
     Object represent a User
     """
-    insertQuery = "INSERT INTO User (email, firstname, lastname, username, password) VALUES (%s,%s,%s,%s,SHA1(%s))"
+    insertQuery = "INSERT INTO User (email, firstname, lastname, username, password) VALUES (%s,%s,%s,%s, SHA1(%s) )"
     updateQuery = "UPDATE User SET email = %s, firstname = %s, lastname = %s, username = %s WHERE id = %s)"
     deleteQuery = "DELETE FROM User WHERE id = %s)"
     updatePasswordQuery = "UPDATE User SET email = %s, firstname = %s, lastname = %s, username = %s ,password = %s WHERE id = %s)"
