@@ -1,7 +1,7 @@
 import mysql.connector
 
 sql = mysql.connector.connect(host='localhost',database='infoplattform',user='python',password='salami14')
-cursor = sql.cursor()
+c = sql.cursor()
 sessions = {}
 def loadSession(SessionId):
     if SessionId in sessions:
@@ -10,7 +10,8 @@ def loadSession(SessionId):
         return -1
 
 def getCursor():
-    return cursor.nextset()
+    c.nextset()
+    return c
 
 def loadUsers(page = 0, pagesize = 25, email = None , username = None ):
     data = []
