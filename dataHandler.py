@@ -23,7 +23,7 @@ def loadUsers(page = 0, pagesize = 25, email = None , username = None ):
     loadQuery+= " LIMIT %s %s"
     data.append(page*pagesize)
     data.append(pagesize)
-    cursor = sql.getCursor()
+    cursor = sql.cursor()
     cursor.execute(loadQuery, data)
     sql.commit()
     Users = []
@@ -34,7 +34,7 @@ def loadUsers(page = 0, pagesize = 25, email = None , username = None ):
 
 def loadUser(id):
     loadQuery = "SELCET  firstname, lastname,username FROM User WHERE id = %s"
-    cursor = sql.getCursor()
+    cursor = sql.cursor()
     cursor.execute(loadQuery, (id,))
     sql.commit()
     data = cursor.fetchone()
@@ -44,12 +44,13 @@ def loadUser(id):
         return None
 
 
+
 class User:
     """
     Object represent a User
     """
-    insertQuery = "INSERT INTO User (email, firstname, lastname, username, password) VALUES (%s,%s,%s,%s,SHA1(%s))"
-    updateQuery = "UPDATE User SET email = %s, firstname = %s, lastname = %s, username = %s WHERE id = %s)"
+    insertQuery = "INSERT INTO User (email, firstname, lastname, username, password) VALUES (%s,%s,%s,%s, SHA1(%s) )"
+    updateQuery = "UPDATE User SET email = %s, firstname = %s, lastname = %s, username = %s WHERE id = %s"
     deleteQuery = "DELETE FROM User WHERE id = %s)"
     updatePasswordQuery = "UPDATE User SET email = %s, firstname = %s, lastname = %s, username = %s ,password = %s WHERE id = %s)"
 
@@ -63,6 +64,7 @@ class User:
         :param username: users username
         :param advanced: True if advanced permission active
         """
+        print( id, "is of type", type(id) )
         self.id = id
         self.firstname = firstname
         self.lastname = lastname
@@ -75,7 +77,7 @@ class User:
         delete Entry in database with given id
         :return:
         """
-        cursor = sql.getCursor()
+        cursor = sql.cursor()
         cursor.execute(self.deleteQuery, (self.id,))
         sql.commit()
     def store(self , password):
@@ -88,7 +90,7 @@ class User:
         """
         if self.id == -1 and password is not None:
             return False
-        cursor = sql.getCursor()
+        cursor = sql.cursor()
         if self.id == -1:
             cursor.execute(self.insertQuery,(self.email,self.firstname,self.lastname,self.username, password))
 
