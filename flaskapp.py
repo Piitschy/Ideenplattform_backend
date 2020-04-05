@@ -3,12 +3,25 @@ from dataHandler import *
 import json, re
 app = Flask(__name__)
 
-def object2json(obj):
+def object2json(obj,array=False):
     if obj is None:
-        return json.dumps({"error":"Objekt nicht vorhanden"})
+        return json.dumps({"data":None,"code":204,"error":"Objekt nicht vorhanden"})
+    if array:
+        dataArray=[]
+        for o in obj:
+            obj_temp={}
+            for attr, value in o.__dict__.items():
+                obj_temp.update({attr:value})
+            dataArray.append(obj_temp)
+        data={"data":dataArray}
+    else:
+        obj_temp={}
+        for attr, value in obj.__dict__.items():
+            obj_temp.update({attr:value})
+        data={"data":obj_temp}
     ret={}
-    for attr, value in obj.__dict__.items():
-        ret.update({attr:value})
+    ret.update(data)
+    ret.update({"code":200})
     return json.dumps(ret)
 
 def validierung(eingabe,typ=None,regex=None):
@@ -39,7 +52,8 @@ def get_userlist():
             size = validierung(request.args.get('size'),"int",regex)
             username = validierung(request.args.get('username'),"uname",regex)
             email = validierung(request.args.get('email'),"email",regex)
-            return "200"
+
+            return object2json(loadUsers(page,size,email,username),array=True)
 
         if request.method == "POST":
             """
@@ -83,7 +97,8 @@ def parse_request(userId):
 #CONTENT
 @app.route("/content/<string:contentId>", methods=["GET","DELETE"])
 def parse_request(contentId):
-    ret=""
+    pass
+    '''
     try:
         if request.method == "GET":
             """
@@ -93,6 +108,7 @@ def parse_request(contentId):
             comments=(,)
             sections = [Section]
             """
+    '''
             
 
 
