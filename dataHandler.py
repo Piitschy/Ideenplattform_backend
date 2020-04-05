@@ -9,9 +9,40 @@ def loadSession(SessionId):
         return -1
 
 
+def loadUsers(page = 0, pagesize = 25, email = None , username = None ):
+    data = []
+    loadQuery = "SELCET  id, firstname, lastname,username FROM User"
+    if email is not None and username is not None:
+        loadQuery+=" WHERE"
+        if email is not None:
+            loadQuery += " email Like %s"
+            data.append(email)
+        if username is not None:
+            loadQuery += " username Like %s"
+            data.append(username)
+    loadQuery+= " LIMIT %s %s"
+    data.append(page*pagesize)
+    data.append(pagesize)
+    cursor = sql.getCursor()
+    cursor.execute(loadQuery, data)
+    sql.commit()
+    Users = []
+    for userdata in cursor.fetchall():
+        Users.append(User(userdata[0], userdata[1], userdata[2], userdata[3]))
+    return Users
+
 
 def loadUser(id):
-    pass
+    loadQuery = "SELCET  firstname, lastname,username FROM User WHERE id = %s"
+    cursor = sql.getCursor()
+    cursor.execute(loadQuery, (id,))
+    sql.commit()
+    data = cursor.fetchone()
+    if data is not None:
+        return User(id, data[0], data[1], data[2])
+    else:
+        return None
+
 
 class User:
     """
@@ -55,7 +86,7 @@ class User:
         :param password: userpassword only change if value is set can't be none if id is -1
         :return: was successful
         """
-        if self.id == -1 and None == password:
+        if self.id == -1 and password is not None:
             return False
         cursor = sql.getCursor()
         if self.id == -1:
