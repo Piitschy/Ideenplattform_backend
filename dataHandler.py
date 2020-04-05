@@ -1,8 +1,4 @@
 import mysql.connector
-sql = mysql.connector.connect(host='localhost',database='infoplattform',user='python',password='salami14')
-cursor = sql.cursor()
-cursor.execute("INSERT INTO User (email, firstname, lastname, username, password) VALUES (%s,%s,%s,%s, SHA1(%s) )", ("email","fistname","lastname","username","password"))
-sql.commit()
 
 
 sessions = {}
@@ -92,6 +88,7 @@ class User:
         :param password: userpassword only change if value is set can't be none if id is -1
         :return: was successful
         """
+        sql = mysql.connector.connect(host='localhost',database='infoplattform',user='python',password='salami14')
         if self.id == -1 and password is not None:
             return False
         cursor = sql.cursor()
