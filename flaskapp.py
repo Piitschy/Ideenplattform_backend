@@ -71,35 +71,24 @@ def get_userlist():
         :param advanced: True if advanced permission active
         """
         r=request.get_json(force=True)
-        """
-        userId = validierung(request.form.get('id'),"id",regex)
-        email = validierung(request.form.get('email'),"email",regex)
-        firstname = validierung(request.form.get('firstname'),"name",regex)
-        lastname = validierung(request.form.get('lastname'),"name",regex)
-        username = validierung(request.form.get('username'),"uname",regex)
-        password = validierung(request.form.get('password'),"password",regex)
-        paras = (email,firstname,lastname,username)
-        print(paras)
-        """
+        print(r)
+        #validierung
         u=User(id=-1,email=r["email"],firstname=r["firstname"],lastname=r["lastname"],username=r["username"])
-        print(u)
         u.store(password= r["password"])
-        return "200"
+
+        return object2json(u)
 
 
 @app.route("/user/<string:userId>", methods=["GET","DELETE"])
 def parse_request(userId):
     ret=""
-    try:
-        if request.method == "GET":
-            return object2json(loadUser(userId))
-        if request.method == "DELETE":
-            u=loadUser(userId)
-            u.delete()
-            return "200"
-    except:
-        ret="202"
-    return ret
+    if request.method == "GET":
+        return object2json(loadUser(userId))
+    if request.method == "DELETE":
+        u=loadUser(userId)
+        u.delete()
+        return "200"
+
 '''
 #CONTENT
 @app.route("/content/<string:contentId>", methods=["GET","DELETE"])
