@@ -71,7 +71,6 @@ def get_userlist():
         :param advanced: True if advanced permission active
         """
         r=request.get_json(force=True)
-
         """
         userId = validierung(request.form.get('id'),"id",regex)
         email = validierung(request.form.get('email'),"email",regex)
