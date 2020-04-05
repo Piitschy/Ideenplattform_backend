@@ -43,10 +43,7 @@ def loadUser(id):
     else:
         return None
 
-class subSection:
 
-class Content:
-    insertQuery = "INSERT INTO User (email, firstname, lastname, username, password) VALUES (%s,%s,%s,%s,SHA1(%s))"
 
 class User:
     """
