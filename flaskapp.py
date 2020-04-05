@@ -81,7 +81,7 @@ def get_userlist():
         paras = (email,firstname,lastname,username)
         print(paras)
         """
-        u=User(email=r["email"],firstname=r["firstname"],lastname=r["lastname"],username=r["username"])
+        u=User(id=-1,email=r["email"],firstname=r["firstname"],lastname=r["lastname"],username=r["username"])
         print(u)
         u.store(r["password"])
         return "200"
