@@ -12,7 +12,7 @@ def loadSession(SessionId):
 
 def loadUsers(page = 0, pagesize = 25, email = None , username = None ):
     data = []
-    loadQuery = "SELCET  id, firstname, lastname,username FROM User"
+    loadQuery = "SELECT  id, firstname, lastname,username FROM User"
     if email is not None and username is not None:
         loadQuery+=" WHERE"
         if email is not None:
@@ -34,7 +34,7 @@ def loadUsers(page = 0, pagesize = 25, email = None , username = None ):
 
 
 def loadUser(id):
-    loadQuery = "SELCET  firstname, lastname,username FROM User WHERE id = %s"
+    loadQuery = "SELECT  firstname, lastname,username FROM User WHERE id = %s"
     cursor = sql.cursor()
     cursor.execute(loadQuery, (id,))
     sql.commit()
