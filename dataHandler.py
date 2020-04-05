@@ -1,5 +1,6 @@
 import mysql.connector
 
+sql = mysql.connector.connect(host='localhost',database='infoplattform',user='python',password='salami14')
 
 sessions = {}
 def loadSession(SessionId):
@@ -88,8 +89,8 @@ class User:
         :param password: userpassword only change if value is set can't be none if id is -1
         :return: was successful
         """
-        sql = mysql.connector.connect(host='localhost',database='infoplattform',user='python',password='salami14')
-        if self.id == -1 and password is not None:
+
+        if self.id == -1 and password is None:
             return False
         cursor = sql.cursor()
         if self.id == -1:
