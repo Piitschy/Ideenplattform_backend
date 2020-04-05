@@ -104,7 +104,9 @@ class User:
         else:
             cursor.execute(self.updateQuery,(self.email,self.firstname,self.lastname,self.username ,self.id))
         sql.commit()
-        if cursor.rowcount == 0:
+        cursor.close()
+        id = cursor.lastrowid
+        if id == 0:
             return False
-        self.id = cursor.lastrowid
+        self.id = id
         return True
