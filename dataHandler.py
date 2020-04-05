@@ -1,7 +1,7 @@
 import mysql.connector
 
 sql = mysql.connector.connect(host='localhost',database='infoplattform',user='python',password='salami14')
-
+cursor = sql.cursor()
 sessions = {}
 def loadSession(SessionId):
     if SessionId in sessions:
@@ -9,6 +9,8 @@ def loadSession(SessionId):
     else:
         return -1
 
+def getCursor():
+    return cursor.nextset()
 
 def loadUsers(page = 0, pagesize = 25, email = None , username = None ):
     data = []
@@ -24,26 +26,22 @@ def loadUsers(page = 0, pagesize = 25, email = None , username = None ):
     loadQuery+= " LIMIT %s %s"
     data.append((page*pagesize))
     data.append(pagesize)
-    cursor = sql.cursor()
+    cursor = getCursor()
     cursor.execute(loadQuery, data)
     sql.commit()
     Users = []
     for userdata in cursor.fetchall():
         Users.append(User(userdata[0], userdata[1], userdata[2], userdata[3]))
-    cursor.nextset()
-    cursor.close()
     return Users
 
 
 def loadUser(id):
     print("loadUser")
     loadQuery = "SELECT  firstname, lastname,username FROM User WHERE id = %s"
-    cursor = sql.cursor()
+    cursor = getCursor()
     cursor.execute(loadQuery, (id,))
     sql.commit()
     data = cursor.fetchone()
-    cursor.nextset()
-    cursor.close()
     if data is not None:
         return User(id, data[0], data[1], data[2])
     else:
@@ -83,10 +81,9 @@ class User:
         delete Entry in database with given id
         :return:
         """
-        cursor = sql.cursor()
+        cursor = getCursor()
         cursor.execute(self.deleteQuery, (self.id,))
         sql.commit()
-        cursor.close()
     def store(self , password):
         """
         stores the dataset to database
@@ -98,7 +95,7 @@ class User:
 
         if self.id == -1 and password is None:
             return False
-        cursor = sql.cursor()
+        cursor = getCursor()
         if self.id == -1:
             cursor.execute(self.insertQuery,(self.email,self.firstname,self.lastname,self.username, password))
 
@@ -107,7 +104,6 @@ class User:
         else:
             cursor.execute(self.updateQuery,(self.email,self.firstname,self.lastname,self.username ,self.id))
         sql.commit()
-        cursor.close()
         id = cursor.lastrowid
         if id == 0:
             return False
