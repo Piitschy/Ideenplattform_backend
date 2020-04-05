@@ -3,9 +3,11 @@ from dataHandler import *
 import json, re
 app = Flask(__name__)
 
-def object2json(object):
+def object2json(obj):
+    if obj is None:
+        return json.dumps({"error":"Objekt nicht vorhanden"})
     ret={}
-    for attr, value in object.__dict__.items():
+    for attr, value in obj.__dict__.items():
         ret.update({attr:value})
     return json.dumps(ret)
 
@@ -23,29 +25,46 @@ def validierung(eingabe,typ=None,regex=None):
 #USER
 @app.route("/user", methods=["GET","POST"])
 def get_userlist():
-    ret=""
     try:
         if request.method == "GET":
-            username = null(request.args.get('username'))
-            email = null(request.args.get('email'))
-            #SQL get all users
-            ret="200"
+            """
+            get a list of User-Object
+
+            :param page: index of page
+            :param size: size of page
+            :param username: users username
+            :param email: user email
+            """
+            page = validierung(request.args.get('page'),"int",regex)
+            size = validierung(request.args.get('size'),"int",regex)
+            username = validierung(request.args.get('username'),"uname",regex)
+            email = validierung(request.args.get('email'),"email",regex)
+            return "200"
 
         if request.method == "POST":
+            """
+            create an User-Object
+
+            :param id: the Id of the exist database entry or -1
+            :param email: user email
+            :param firstname: user firstname
+            :param lastname: users lastname
+            :param username: users username
+            :param advanced: True if advanced permission active
+            """
             email = validierung(request.form('email'),"email",regex)
             firstname = validierung(request.form('firstname'),"name",regex)
             lastname = validierung(request.form('lastname'),"name",regex)
             username = validierung(request.form('username'),"uname",regex)
+            password = validierung(request.form('password'),"password",regex)
             paras = (email,firstname,lastname,username)
             if None in paras:
                 ret="202 Bad Data"
             u=User(-1,email,firstname,lastname,username)
-            u.store(None)
-            #SQL write dates
-            ret="200"
+            u.store(password)
+            return "200"
     except:
-        ret="202"
-    return ret
+        return "202"
 
 @app.route("/user/<string:userId>", methods=["GET","DELETE"])
 def parse_request(userId):
@@ -54,9 +73,9 @@ def parse_request(userId):
         if request.method == "GET":
             return object2json(loadUser(userId))
         if request.method == "DELETE":
-            #Nachfrage?
-            #SQL delete user by "userId"
-            ret = "200"
+            u=loadUser(userId)
+            u.delete()
+            return "200"
     except:
         ret="202"
     return ret
