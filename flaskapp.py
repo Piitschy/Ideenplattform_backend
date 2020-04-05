@@ -50,10 +50,13 @@ def get_userlist():
         :param email: user email
         """
         page = validierung(request.args.get('page'),"int",regex)
+        if page is None:
+            page=0
         size = validierung(request.args.get('size'),"int",regex)
+        if size is None:
+            size=25
         username = validierung(request.args.get('username'),"uname",regex)
         email = validierung(request.args.get('email'),"email",regex)
-
         return object2json(loadUsers(page,size,email,username),array=True)
 
     if request.method == "POST":
@@ -67,35 +70,25 @@ def get_userlist():
         :param username: users username
         :param advanced: True if advanced permission active
         """
-        userId = validierung(request.form.get('id'),"id",regex)
-        email = validierung(request.form.get('email'),"email",regex)
-        firstname = validierung(request.form.get('firstname'),"name",regex)
-        lastname = validierung(request.form.get('lastname'),"name",regex)
-        username = validierung(request.form.get('username'),"uname",regex)
-        password = validierung(request.form.get('password'),"password",regex)
-        """
-        paras = (email,firstname,lastname,username)
-        if None in paras:
-            return "Nicht alle Parameter befuellt"
-        """
-        u=User(userId,email,firstname,lastname,username)
-        u.store(password)
-        return "200"
+        r=request.get_json(force=True)
+        print(r)
+        #validierung
+        u=User(id=-1,email=r["email"],firstname=r["firstname"],lastname=r["lastname"],username=r["username"])
+        u.store(password= r["password"])
+
+        return object2json(u)
 
 
 @app.route("/user/<string:userId>", methods=["GET","DELETE"])
 def parse_request(userId):
     ret=""
-    try:
-        if request.method == "GET":
-            return object2json(loadUser(userId))
-        if request.method == "DELETE":
-            u=loadUser(userId)
-            u.delete()
-            return "200"
-    except:
-        ret="202"
-    return ret
+    if request.method == "GET":
+        return object2json(loadUser(userId))
+    if request.method == "DELETE":
+        u=loadUser(userId)
+        u.delete()
+        return "200"
+
 '''
 #CONTENT
 @app.route("/content/<string:contentId>", methods=["GET","DELETE"])
