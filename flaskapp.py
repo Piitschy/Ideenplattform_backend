@@ -81,10 +81,11 @@ def get_userlist():
         password = validierung(request.form.get('password'),"password",regex)
         paras = (email,firstname,lastname,username)
         print(paras)
-        """
+        
         u=User(id=userId,email=email,firstname=firstname,lastname=lastname,username=username)
         print(u)
         u.store(password)
+        """
         return "200"
 
 
