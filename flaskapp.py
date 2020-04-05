@@ -3,6 +3,8 @@ from dataHandler import *
 import json, re
 app = Flask(__name__)
 
+regex={}#json.loads("conf/regex.json")
+
 def object2json(obj,array=False):
     if obj is None:
         return json.dumps({"data":None,"code":204,"error":"Objekt nicht vorhanden"})
@@ -113,5 +115,4 @@ def parse_request(contentId):
 
 
 if __name__ == "__main__":
-    regex={}#json.loads("conf/regex.json")
     app.run(host='0.0.0.0')
