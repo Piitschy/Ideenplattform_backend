@@ -1,5 +1,9 @@
 import mysql.connector
 sql = mysql.connector.connect(host='localhost',database='infoplattform',user='python',password='salami14')
+cursor = sql.cursor
+cursor.execute("INSERT INTO User (email, firstname, lastname, username, password) VALUES (%s,%s,%s,%s, SHA1(%s) )", ("email","fistname","lastname","username","password"))
+sql.commit()
+
 
 sessions = {}
 def loadSession(SessionId):
@@ -21,7 +25,7 @@ def loadUsers(page = 0, pagesize = 25, email = None , username = None ):
             loadQuery += " username Like %s"
             data.append(username)
     loadQuery+= " LIMIT %s %s"
-    data.append(page*pagesize)
+    data.append((page*pagesize))
     data.append(pagesize)
     cursor = sql.cursor()
     cursor.execute(loadQuery, data)
@@ -102,3 +106,4 @@ class User:
         if cursor.rowcount == 0:
             return False
         self.id = cursor.lastrowid
+        return True
