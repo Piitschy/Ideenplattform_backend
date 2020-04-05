@@ -45,7 +45,7 @@ def loadUser(id):
     cursor.execute(loadQuery, (id,))
     data = cursor.fetchone()
     if data is not None:
-        return User(id, data[0], data[1], data[2])
+        return User(id, data[0], data[1], data[2],True)
     else:
         return None
 
