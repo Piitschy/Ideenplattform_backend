@@ -11,6 +11,8 @@ def loadSession(SessionId):
 
 def getCursor():
     c.nextset()
+    c.close()
+    c = sql.cursor()
     return c
 
 def loadUsers(page = 0, pagesize = 25, email = None , username = None ):
