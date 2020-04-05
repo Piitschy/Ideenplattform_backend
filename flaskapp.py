@@ -76,12 +76,10 @@ def get_userlist():
         lastname = validierung(request.form.get('lastname'),"name",regex)
         username = validierung(request.form.get('username'),"uname",regex)
         password = validierung(request.form.get('password'),"password",regex)
-        """
         paras = (email,firstname,lastname,username)
-        if None in paras:
-            return "Nicht alle Parameter befuellt"
-        """
-        u=User(userId,email,firstname,lastname,username)
+        print(paras)
+        u=User(id=userId,email=email,firstname=firstname,lastname=lastname,username=username)
+        print(u)
         u.store(password)
         return "200"
 
