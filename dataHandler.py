@@ -36,6 +36,7 @@ def loadUsers(page = 0, pagesize = 25, email = None , username = None ):
 
 
 def loadUser(id):
+    print("loadUser")
     loadQuery = "SELECT  firstname, lastname,username FROM User WHERE id = %s"
     cursor = sql.cursor()
     cursor.execute(loadQuery, (id,))
