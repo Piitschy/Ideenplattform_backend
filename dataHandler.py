@@ -30,6 +30,7 @@ def loadUsers(page = 0, pagesize = 25, email = None , username = None ):
     Users = []
     for userdata in cursor.fetchall():
         Users.append(User(userdata[0], userdata[1], userdata[2], userdata[3]))
+    cursor.nextset()
     cursor.close()
     return Users
 
@@ -40,6 +41,7 @@ def loadUser(id):
     cursor.execute(loadQuery, (id,))
     sql.commit()
     data = cursor.fetchone()
+    cursor.nextset()
     cursor.close()
     if data is not None:
         return User(id, data[0], data[1], data[2])
