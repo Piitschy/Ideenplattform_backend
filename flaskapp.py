@@ -27,6 +27,9 @@ def object2json(obj,array=False):
     return json.dumps(ret)
 
 def validierung(eingabe,typ=None,regex=None):
+    """
+    Gleicht die Eingabe mit den in conf/ interlegten regular expressions ab
+    """
     return eingabe
     """
     if isinstance(eingabe, str) or typ==None:
@@ -50,11 +53,9 @@ def get_userlist():
         :param email: user email
         """
         page = validierung(request.args.get('page'),"int",regex)
-        if page is None:
-            page=0
+        page = page if page is not None else 0
         size = validierung(request.args.get('size'),"int",regex)
-        if size is None:
-            size=25
+        size = size if page is not None else 25
         username = validierung(request.args.get('username'),"uname",regex)
         email = validierung(request.args.get('email'),"email",regex)
         return object2json(loadUsers(page,size,email,username),array=True)
@@ -105,8 +106,5 @@ def parse_request(contentId):
             sections = [Section]
             """
 '''
-            
-
-
 if __name__ == "__main__":
     app.run(host='0.0.0.0')
