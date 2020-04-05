@@ -10,6 +10,7 @@ def loadSession(SessionId):
         return -1
 
 def getCursor():
+    global c
     c.nextset()
     c.close()
     c = sql.cursor()
