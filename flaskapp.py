@@ -73,12 +73,12 @@ def get_userlist():
             password = validierung(request.form('password'),"password",regex)
             paras = (email,firstname,lastname,username)
             if None in paras:
-                ret="202 Bad Data"
+                return "Nicht alle Parameter befuellt"
             u=User(-1,email,firstname,lastname,username)
             u.store(password)
             return "200"
     except:
-        return "202"
+        return "Fehler bei Methond"
 
 @app.route("/user/<string:userId>", methods=["GET","DELETE"])
 def parse_request(userId):
