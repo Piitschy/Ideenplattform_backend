@@ -38,47 +38,48 @@ def validierung(eingabe,typ=None,regex=None):
 #USER
 @app.route("/user", methods=["GET","POST"])
 def get_userlist():
-    try:
-        if request.method == "GET":
-            """
-            get a list of User-Object
+    if request.method == "GET":
+        """
+        get a list of User-Object
 
-            :param page: index of page
-            :param size: size of page
-            :param username: users username
-            :param email: user email
-            """
-            page = validierung(request.args.get('page'),"int",regex)
-            size = validierung(request.args.get('size'),"int",regex)
-            username = validierung(request.args.get('username'),"uname",regex)
-            email = validierung(request.args.get('email'),"email",regex)
+        :param page: index of page
+        :param size: size of page
+        :param username: users username
+        :param email: user email
+        """
+        page = validierung(request.args.get('page'),"int",regex)
+        size = validierung(request.args.get('size'),"int",regex)
+        username = validierung(request.args.get('username'),"uname",regex)
+        email = validierung(request.args.get('email'),"email",regex)
 
-            return object2json(loadUsers(page,size,email,username),array=True)
+        return object2json(loadUsers(page,size,email,username),array=True)
 
-        if request.method == "POST":
-            """
-            create an User-Object
+    if request.method == "POST":
+        """
+        create an User-Object
 
-            :param id: the Id of the exist database entry or -1
-            :param email: user email
-            :param firstname: user firstname
-            :param lastname: users lastname
-            :param username: users username
-            :param advanced: True if advanced permission active
-            """
-            email = validierung(request.form('email'),"email",regex)
-            firstname = validierung(request.form('firstname'),"name",regex)
-            lastname = validierung(request.form('lastname'),"name",regex)
-            username = validierung(request.form('username'),"uname",regex)
-            password = validierung(request.form('password'),"password",regex)
-            paras = (email,firstname,lastname,username)
-            if None in paras:
-                return "Nicht alle Parameter befuellt"
-            u=User(-1,email,firstname,lastname,username)
-            u.store(password)
-            return "200"
-    except:
-        return "Fehler bei Methond"
+        :param id: the Id of the exist database entry or -1
+        :param email: user email
+        :param firstname: user firstname
+        :param lastname: users lastname
+        :param username: users username
+        :param advanced: True if advanced permission active
+        """
+        userId = validierung(request.form('id'),"id",regex)
+        email = validierung(request.form('email'),"email",regex)
+        firstname = validierung(request.form('firstname'),"name",regex)
+        lastname = validierung(request.form('lastname'),"name",regex)
+        username = validierung(request.form('username'),"uname",regex)
+        password = validierung(request.form('password'),"password",regex)
+        """
+        paras = (email,firstname,lastname,username)
+        if None in paras:
+            return "Nicht alle Parameter befuellt"
+        """
+        u=User(-1,email,firstname,lastname,username)
+        u.store(password)
+        return "200"
+
 
 @app.route("/user/<string:userId>", methods=["GET","DELETE"])
 def parse_request(userId):
