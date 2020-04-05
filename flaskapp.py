@@ -50,10 +50,13 @@ def get_userlist():
         :param email: user email
         """
         page = validierung(request.args.get('page'),"int",regex)
+        if type(page)==None:
+            page=0
         size = validierung(request.args.get('size'),"int",regex)
+        if type(size)==None:
+            size=25
         username = validierung(request.args.get('username'),"uname",regex)
         email = validierung(request.args.get('email'),"email",regex)
-
         return object2json(loadUsers(page,size,email,username),array=True)
 
     if request.method == "POST":
