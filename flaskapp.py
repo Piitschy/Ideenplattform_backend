@@ -50,10 +50,10 @@ def get_userlist():
         :param email: user email
         """
         page = validierung(request.args.get('page'),"int",regex)
-        if type(page)==None:
+        if page is None:
             page=0
         size = validierung(request.args.get('size'),"int",regex)
-        if type(size)==None:
+        if size is None:
             size=25
         username = validierung(request.args.get('username'),"uname",regex)
         email = validierung(request.args.get('email'),"email",regex)
@@ -83,7 +83,7 @@ def get_userlist():
         """
         u=User(id=-1,email=r["email"],firstname=r["firstname"],lastname=r["lastname"],username=r["username"])
         print(u)
-        u.store(r["password"])
+        u.store(password= r["password"])
         return "200"
 
 
