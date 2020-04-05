@@ -93,12 +93,11 @@ def parse_request(userId):
     except:
         ret="202"
     return ret
-
+'''
 #CONTENT
 @app.route("/content/<string:contentId>", methods=["GET","DELETE"])
 def parse_request(contentId):
     pass
-    '''
     try:
         if request.method == "GET":
             """
@@ -108,7 +107,7 @@ def parse_request(contentId):
             comments=(,)
             sections = [Section]
             """
-    '''
+'''
             
 
 
