@@ -70,7 +70,7 @@ def get_userlist():
         :param username: users username
         :param advanced: True if advanced permission active
         """
-        r=request.json
+        r=request.get_json(force=True)
         print(r)
         """
         userId = validierung(request.form.get('id'),"id",regex)
@@ -79,9 +79,9 @@ def get_userlist():
         lastname = validierung(request.form.get('lastname'),"name",regex)
         username = validierung(request.form.get('username'),"uname",regex)
         password = validierung(request.form.get('password'),"password",regex)
-        """
         paras = (email,firstname,lastname,username)
         print(paras)
+        """
         u=User(id=userId,email=email,firstname=firstname,lastname=lastname,username=username)
         print(u)
         u.store(password)
