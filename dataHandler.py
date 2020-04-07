@@ -35,7 +35,7 @@ def loadUsers(page = 0, pagesize = 25, email = None , username = None ):
     cursor.execute(loadQuery, data)
     Users = []
     for userdata in cursor.fetchall():
-        Users.append(User(userdata[0], userdata[1], userdata[2], userdata[3]))
+        Users.append(User(userdata[0], userdata[1], userdata[2], userdata[3], userdata[4]))
     return Users
 
 
