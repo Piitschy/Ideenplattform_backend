@@ -27,7 +27,7 @@ def loadUsers(page = 0, pagesize = 25, email = None , username = None ):
         if username is not None:
             loadQuery += " username Like %s"
             data.append(username)
-    loadQuery+= " LIMIT %s %s"
+    loadQuery+= " LIMIT %s, %s"
     print(loadQuery)
     data.append((page*pagesize))
     data.append(pagesize)
