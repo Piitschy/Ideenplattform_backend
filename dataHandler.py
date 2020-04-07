@@ -28,7 +28,7 @@ def loadUsers(page = 0, pagesize = 25, email = None , username = None ):
             loadQuery += " username Like %s"
             data.append(username)
     loadQuery+= " LIMIT %s %s"
-    print("page",page,"size",pagesize)
+    print(loadQuery)
     data.append((page*pagesize))
     data.append(pagesize)
     cursor = getCursor()
