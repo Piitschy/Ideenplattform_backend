@@ -81,6 +81,9 @@ class User:
         self.email = email
         self.advanced = advanced
 
+    def __str__ (self):
+        return self.__class__.__name__
+
     def delete(self):
         """
         delete Entry in database with given id
@@ -114,6 +117,3 @@ class User:
             return False
         self.id = id
         return True
-
-    def __str__ (self):
-        return self.__class__.__name__

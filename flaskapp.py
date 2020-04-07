@@ -13,7 +13,8 @@ def object2json(obj,array=False):
         for o in obj:
             obj_temp={}
             for attr, value in o.__dict__.items():
-                obj_temp.update({attr:value})
+                if attr != "advanced":
+                    obj_temp.update({attr:value})
             dataArray.append(obj_temp)
         data={"data":dataArray}
     else:
@@ -93,6 +94,10 @@ def parse_request(userId):
         return "200"
 
 '''
+#TAGS
+@app.route("/tag")
+def 
+
 #CONTENT
 @app.route("/content/<string:contentId>", methods=["GET","DELETE"])
 def parse_request(contentId):
