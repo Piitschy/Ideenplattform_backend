@@ -52,7 +52,7 @@ def loadUser(id):
 
 class Content:
     def __init__(self,id, headline, author_id, ):
-
+        pass
 class User:
     """
     Object represent a User
