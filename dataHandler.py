@@ -18,7 +18,7 @@ def getCursor():
 
 def loadUsers(page = 0, pagesize = 25, email = None , username = None ):
     data = []
-    loadQuery = "SELECT  id, firstname, lastname,username FROM User"
+    loadQuery = "SELECT  id,email, firstname, lastname,username FROM User"
     if email is not None and username is not None:
         loadQuery+=" WHERE"
         if email is not None:
@@ -28,6 +28,7 @@ def loadUsers(page = 0, pagesize = 25, email = None , username = None ):
             loadQuery += " username Like %s"
             data.append(username)
     loadQuery+= " LIMIT %s %s"
+    print("page",page,"size",pagesize)
     data.append((page*pagesize))
     data.append(pagesize)
     cursor = getCursor()
@@ -49,7 +50,8 @@ def loadUser(id):
     else:
         return None
 
-
+class Content:
+    def __init__(self,id, headline, author_id, ):
 
 class User:
     """
