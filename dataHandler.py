@@ -53,6 +53,7 @@ def loadUser(id):
 class Content:
     def __init__(self,id, headline, author_id, ):
         pass
+
 class User:
     """
     Object represent a User
@@ -113,3 +114,6 @@ class User:
             return False
         self.id = id
         return True
+
+    def __str__ (self):
+        return self.__class__.__name__
