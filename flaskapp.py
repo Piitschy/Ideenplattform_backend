@@ -19,7 +19,8 @@ def object2json(obj,array=False):
     else:
         obj_temp={}
         for attr, value in obj.__dict__.items():
-            obj_temp.update({attr:value})
+            if attr != "advanced":
+                obj_temp.update({attr:value})
         data={"data":obj_temp}
     ret={}
     ret.update(data)
