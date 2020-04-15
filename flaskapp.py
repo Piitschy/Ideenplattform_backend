@@ -1,12 +1,22 @@
-from flask import Flask, request
 from dataHandler import *
+from flask import Flask, request
+from os import walk
 import json, re
 app = Flask(__name__)
 
 regex={}#json.loads("conf/regex.json")
 
-def object2json(obj,array=False):
-    internelAttr=["advanced"]
+def initConf(loc,format=".json"):
+    format= format if format[0] == "." else "."+format
+    global conf
+    conf={}
+    for root, dirs, files in walk(loc):
+        for filename in files:
+            if format in filename:
+                with open(loc+filename) as j:
+                    conf.update({filename[:-len(format)]:json.loads(j.read())})
+
+def object2json(obj,internelAttr=conf["settings"]["internalAttr"]):
     def class2dict(klasse):
         dictionary={}
         for attr, value in klasse.__dict__.items():
@@ -26,7 +36,7 @@ def object2json(obj,array=False):
     ret.update({"code":200})
     return json.dumps(ret)
 
-def validierung(eingabe,typ=None,regex=None):
+def validierung(eingabe,typ=None,regex=conf["regex"]):
     """
     Gleicht die Eingabe mit den in conf/ interlegten regular expressions ab
     """
@@ -111,4 +121,5 @@ def parse_request(contentId):
             """
 '''
 if __name__ == "__main__":
+    initConf("conf/")
     app.run(host='0.0.0.0')
