@@ -6,25 +6,23 @@ app = Flask(__name__)
 regex={}#json.loads("conf/regex.json")
 
 def object2json(obj,array=False):
+    internelAttr=["advanced"]
+    def class2dict(klasse):
+        dictionary={}
+        for attr, value in klasse.__dict__.items():
+            if attr not in internelAttr:
+                dictionary.update({attr:value})
+        return dictionary
     if obj is None:
         return json.dumps({"data":None,"code":204,"error":"Objekt nicht vorhanden"})
-    if array:
-        dataArray=[]
-        for o in obj:
-            obj_temp={}
-            for attr, value in o.__dict__.items():
-                if attr != "advanced":
-                    obj_temp.update({attr:value})
-            dataArray.append(obj_temp)
-        data={"data":dataArray}
+    if type(obj)!=list:
+        dataKey=obj.__str__().lower()
+        dataContent=class2dict(obj)
     else:
-        obj_temp={}
-        for attr, value in obj.__dict__.items():
-            if attr != "advanced":
-                obj_temp.update({attr:value})
-        data={"data":obj_temp}
-    ret={}
-    ret.update(data)
+        dataKey=obj[0].__str__().lower()+'s'
+        dataContent=[class2dict(o) for o in obj]
+    data={dataKey:dataContent}
+    ret={"data":data}
     ret.update({"code":200})
     return json.dumps(ret)
 
