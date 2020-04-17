@@ -16,7 +16,8 @@ def initConf(loc,format=".json"):
                 with open(loc+filename) as j:
                     conf.update({filename[:-len(format)]:json.loads(j.read())})
 
-def object2json(obj,internalAttr=["advanced"]): #internelAttr=conf["settings"]["internalAttr"]
+def object2json(obj): #internelAttr=conf["settings"]["internalAttr"]
+    internalAttr=["advanced"]
     def class2dict(klasse):
         dictionary={}
         for attr, value in klasse.__dict__.items():
