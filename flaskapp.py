@@ -16,12 +16,12 @@ def initConf(loc,format=".json"):
                 with open(loc+filename) as j:
                     conf.update({filename[:-len(format)]:json.loads(j.read())})
 
-def object2json(obj): #internelAttr=conf["settings"]["internelAttr"]
-    internelAttr=["advanced"]
+def object2json(obj,internalAttr=conf["settings"]["internalAttr"]):
+    #internalAttr=["advanced"]
     def class2dict(klasse):
         dictionary={}
         for attr, value in klasse.__dict__.items():
-            if attr not in internelAttr:
+            if attr not in internalAttr:
                 dictionary.update({attr:value})
         return dictionary
     if obj is None:
