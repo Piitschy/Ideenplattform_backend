@@ -16,7 +16,7 @@ def initConf(loc,format=".json"):
                 with open(loc+filename) as j:
                     conf.update({filename[:-len(format)]:json.loads(j.read())})
 
-def object2json(obj,internelAttr=conf["settings"]["internalAttr"]):
+def object2json(obj,internalAttr=["advanced"]): #internelAttr=conf["settings"]["internalAttr"]
     def class2dict(klasse):
         dictionary={}
         for attr, value in klasse.__dict__.items():
@@ -36,7 +36,7 @@ def object2json(obj,internelAttr=conf["settings"]["internalAttr"]):
     ret.update({"code":200})
     return json.dumps(ret)
 
-def validierung(eingabe,typ=None,regex=conf["regex"]):
+def validierung(eingabe,typ=None):#regex=conf["regex"]
     """
     Gleicht die Eingabe mit den in conf/ interlegten regular expressions ab
     """
@@ -120,6 +120,6 @@ def parse_request(contentId):
             sections = [Section]
             """
 '''
-initConf("conf/")
 if __name__ == "__main__":
+    initConf("conf/")
     app.run(host='0.0.0.0')
