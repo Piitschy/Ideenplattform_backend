@@ -68,7 +68,7 @@ def get_userlist():
         size = size if size is not None else 25
         username = validierung(request.args.get('username'),"uname",regex)
         email = validierung(request.args.get('email'),"email",regex)
-        return object2json(loadUsers(page,size,email,username),array=True)
+        return object2json(loadUsers(page,size,email,username))
 
     if request.method == "POST":
         """
