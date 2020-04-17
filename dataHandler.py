@@ -1,6 +1,6 @@
 import mysql.connector
 
-sql = mysql.connector.connect(host='localhost',database='infoplattform',user='python',password='salami14')
+sql = mysql.connector.connect(host='localhost',database='infoplattform',user='python',password='salami14',  auth_plugin='mysql_native_password')
 c = sql.cursor()
 sessions = {}
 def loadSession(SessionId):
@@ -52,6 +52,14 @@ def loadUser(id):
 
 class Content:
     def __init__(self,id, headline, author_id, ):
+        pass
+
+class Tag:
+    def __init__(self,id,name):
+        insertQuery = "INSERT INTO Tag (name) VALUES ( %s )"
+        deleteQuery = "DELETE From Tag WHERE id = %s"
+
+    def create(self):
         pass
 
 class User:
