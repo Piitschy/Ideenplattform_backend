@@ -120,6 +120,6 @@ def parse_request(contentId):
             sections = [Section]
             """
 '''
+initConf("conf/")
 if __name__ == "__main__":
-    initConf("conf/")
     app.run(host='0.0.0.0')
