@@ -37,7 +37,7 @@ def object2json(obj): #internelAttr=conf["settings"]["internalAttr"]
     ret.update({"code":200})
     return json.dumps(ret)
 
-def validierung(eingabe,typ=None):#regex=conf["regex"]
+def validierung(eingabe,typ=None,regex):#regex=conf["regex"]
     """
     Gleicht die Eingabe mit den in conf/ interlegten regular expressions ab
     """
